@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useAuth } from '../../contexts/auth-context';
 import { Button } from '../ui/button';
-import { LogOut } from 'lucide-react';
+import { LogOut, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
@@ -23,7 +23,10 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
              <span className="text-sm text-gray-600 hidden md:inline">
                Olá, {user?.name.split(' ')[0]}
              </span>
-             <Button variant="ghost" size="icon" onClick={logout}>
+             <Button variant="ghost" size="icon" onClick={() => navigate('/merchant/settings')} title="Configurações">
+               <Settings className="h-5 w-5" />
+             </Button>
+             <Button variant="ghost" size="icon" onClick={logout} title="Sair">
                <LogOut className="h-5 w-5" />
              </Button>
           </div>

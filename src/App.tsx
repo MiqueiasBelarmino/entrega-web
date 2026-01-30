@@ -11,6 +11,7 @@ import MerchantDeliveryDetail from './pages/merchant/deliveries-detail';
 import CourierDashboard from './pages/courier/dashboard';
 import CourierMyDeliveries from './pages/courier/deliveries-list';
 import CourierDeliveryDetail from './pages/courier/deliveries-detail';
+import MerchantSettings from './pages/merchant/settings';
 
 const ProtectedRoute = ({ role }: { role?: 'MERCHANT' | 'COURIER' }) => {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -37,6 +38,7 @@ function AppRoutes() {
         <Route path="/merchant" element={<MerchantDashboard />} />
         <Route path="/merchant/deliveries/new" element={<NewDelivery />} />
         <Route path="/merchant/deliveries/:id" element={<MerchantDeliveryDetail />} />
+        <Route path="/merchant/settings" element={<MerchantSettings />} />
       </Route>
 
       {/* Courier Routes */}

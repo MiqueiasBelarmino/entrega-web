@@ -4,9 +4,15 @@ import { api } from '../lib/api';
 interface User {
   id: string;
   name: string;
+  email?: string;
   role: 'MERCHANT' | 'COURIER';
   phoneE164: string;
-  businesses?: { id: string; name: string }[];
+  businesses?: { 
+    id: string; 
+    name: string;
+    address?: string;
+    defaultDeliveryPrice?: number | string;
+  }[];
 }
 
 interface AuthContextType {
@@ -15,6 +21,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (token: string) => Promise<void>;
   logout: () => void;
+  updateUser: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -50,8 +57,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     window.location.href = '/login';
   };
 
+  const updateUser = (updatedUser: User) => {
+    setUser(updatedUser);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

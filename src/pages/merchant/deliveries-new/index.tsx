@@ -41,8 +41,17 @@ export default function NewDelivery() {
   // Pre-select first business if available
   useEffect(() => {
     if (user?.businesses && user.businesses.length > 0) {
-      setValue('businessId', user.businesses[0].id);
-      // Optional: pre-fill pickup address from business address if we had it in the context
+      const business = user.businesses.find(b => b.id === control._defaultValues.businessId) || user.businesses[0];
+      
+      setValue('businessId', business.id);
+      
+      if (business.address) {
+          setValue('pickupAddress', business.address);
+      }
+      
+      if (business.defaultDeliveryPrice) {
+          setValue('price', Number(business.defaultDeliveryPrice));
+      }
     }
   }, [user, setValue]);
 
@@ -72,8 +81,8 @@ export default function NewDelivery() {
   return (
     <DashboardLayout>
       <Button variant="ghost" className="mb-4 pl-0 hover:bg-transparent" onClick={() => navigate(-1)}>
-            <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
-        </Button>
+        <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
+      </Button>
        <div className="max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Nova Entrega</h1>
         
@@ -88,7 +97,14 @@ export default function NewDelivery() {
                                 control={control}
                                 name="businessId"
                                 render={({ field }) => (
-                                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                  <Select onValueChange={(val) => {
+                                      field.onChange(val);
+                                      const selected = user.businesses?.find(b => b.id === val);
+                                      if (selected) {
+                                          if (selected.address) setValue('pickupAddress', selected.address);
+                                          if (selected.defaultDeliveryPrice) setValue('price', Number(selected.defaultDeliveryPrice));
+                                      }
+                                  }} defaultValue={field.value}>
                                     <SelectTrigger>
                                       <SelectValue placeholder="Selecione..." />
                                     </SelectTrigger>
