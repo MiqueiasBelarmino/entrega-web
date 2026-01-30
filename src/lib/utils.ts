@@ -25,3 +25,11 @@ export function formatDateTime(date: string | Date): string {
     minute: '2-digit'
   })
 }
+
+export const statusMap: Record<string, string> = {
+  AVAILABLE: 'Disponível',
+  ACCEPTED: 'Aceita',
+  PICKED_UP: 'Em Trânsito',
+  COMPLETED: 'Concluída',
+  CANCELED: 'Cancelada',
+};
