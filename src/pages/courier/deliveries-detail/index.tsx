@@ -64,34 +64,11 @@ export default function CourierDeliveryDetail() {
 
   const fetchDelivery = async (deliveryId: string) => {
     try {
-        // Trying to reuse the same endpoint might fail with 403.
-        // For MVP, if I can't fetch detail, I'm blind.
-        // I will try to fetch `available` and find it there, OR just try to fetch it.
-        // If it fails, I'll allow "Accept" blindly? No.
-        
-        // Let's implement active delivery fetch on the fly?
-        // Or just rely on the list passed via state?
-        
-        // Better: Fetch `available` and filter. If not found, it might be mine already?
-        const available = await api.get('/deliveries/available');
-        const found = available.data.find((d: Delivery) => d.id === deliveryId);
-        
-        if (found) {
-            setDelivery(found);
-        } else {
-            // Must be accepted by me?
-            // Since I can't query "mine", I'll just error or show placeholder.
-            // Wait, I can't deliver if I can't see address.
-            
-            // I'll implementation `GET /deliveries/my-active` on backend quick?
-            // Or `GET /deliveries/:id` allowing courier if `courierId` matches?
-            // I'll try to add `GET /deliveries/:id` permission for courier in backend.
-            
-            // For now, let's just error message.
-             toast.error("Detalhes não disponíveis (Backend limitation in MVP)");
-        }
+        const response = await api.get(`/deliveries/${deliveryId}`);
+        setDelivery(response.data);
     } catch (error) {
       console.error(error);
+      toast.error("Entrega não encontrada ou sem permissão.");
     } finally {
       setLoading(false);
     }
@@ -101,19 +78,30 @@ export default function CourierDeliveryDetail() {
       if (!delivery) return;
       try {
           await api.post(`/deliveries/${delivery.id}/${action}`);
-          toast.success(`Action ${action} successful`);
-          navigate('/courier');
+          toast.success(`Status atualizado com sucesso!`);
+          fetchDelivery(delivery.id);
       } catch (e) {
-          toast.error("Erro na ação");
+          console.error(e);
+          toast.error("Erro ao atualizar status");
       }
   }
 
-  if (loading) return <DashboardLayout>Loading...</DashboardLayout>;
-  if (!delivery) return <DashboardLayout>Delivery not found or not available</DashboardLayout>;
+  if (loading) return <DashboardLayout>Carregando...</DashboardLayout>;
+  
+  if (!delivery) return (
+      <DashboardLayout>
+           <Button variant="ghost" className="mb-4 pl-0 hover:bg-transparent" onClick={() => navigate('/courier')}>
+                <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
+            </Button>
+            <div className="text-center py-12">
+                <p className="text-lg text-gray-600">Entrega não encontrada ou você não tem permissão para vê-la.</p>
+            </div>
+      </DashboardLayout>
+  );
 
   return (
     <DashboardLayout>
-       <Button variant="ghost" className="mb-4 pl-0 hover:bg-transparent" onClick={() => navigate('/courier')}>
+       <Button variant="ghost" className="mb-4 pl-0 hover:bg-transparent" onClick={() => navigate(-1)}>
             <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
         </Button>
         <Card>
@@ -121,32 +109,58 @@ export default function CourierDeliveryDetail() {
                 <div className="flex justify-between">
                     <div>
                         <CardTitle>{delivery.business.name}</CardTitle>
-                        <CardDescription>Entrega disponível</CardDescription>
+                        <CardDescription>
+                            {delivery.merchant?.name && <span>Responsável: {delivery.merchant.name} - {delivery.merchant.phoneE164}</span>}
+                        </CardDescription>
                     </div>
                     <Badge className="text-lg h-min">{statusMap[delivery.status]}</Badge>
                 </div>
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-gray-50 rounded">
-                        <h3 className="font-semibold mb-2">Retirada</h3>
+                    <div className="p-4 bg-gray-50 rounded border">
+                        <h3 className="font-semibold mb-2 flex items-center gap-2"><Package className="h-4 w-4"/> Retirada</h3>
                         <p>{delivery.pickupAddress}</p>
                     </div>
-                     <div className="p-4 bg-gray-50 rounded">
-                        <h3 className="font-semibold mb-2">Entrega</h3>
+                     <div className="p-4 bg-gray-50 rounded border">
+                        <h3 className="font-semibold mb-2 flex items-center gap-2"><Package className="h-4 w-4"/> Entrega</h3>
                         <p>{delivery.dropoffAddress}</p>
                     </div>
                 </div>
+
+                {delivery.notes && (
+                    <div className="p-4 bg-yellow-50 border border-yellow-200 rounded text-yellow-800">
+                        <h3 className="font-semibold text-sm uppercase tracking-wide mb-1">Observações</h3>
+                        <p>{delivery.notes}</p>
+                    </div>
+                )}
 
                 <div>
                     <h3 className="font-semibold">Valor da Corrida</h3>
                     <p className="text-2xl font-bold">R$ {Number(delivery.price).toFixed(2)}</p>
                 </div>
             </CardContent>
-            <CardFooter className="flex gap-2">
+            <CardFooter className="flex flex-col sm:flex-row gap-3">
                  {delivery.status === 'AVAILABLE' && (
-                     <Button className="w-full" onClick={() => handleAction('accept')}>
+                     <Button className="w-full sm:w-auto" onClick={() => handleAction('accept')}>
                         <CheckCircle className="mr-2 h-4 w-4" /> Aceitar Corrida
+                     </Button>
+                 )}
+
+                {delivery.status === 'ACCEPTED' && (
+                    <>
+                        <Button className="w-full sm:w-auto" onClick={() => handleAction('pickup')}>
+                            <Play className="mr-2 h-4 w-4" /> Iniciar Rota (Retirou)
+                        </Button>
+                        <Button variant="destructive" className="w-full sm:w-auto" onClick={() => handleAction('cancel')}>
+                            <XCircle className="mr-2 h-4 w-4" /> Cancelar
+                        </Button>
+                    </>
+                 )}
+
+                 {delivery.status === 'PICKED_UP' && (
+                     <Button className="w-full sm:w-auto bg-green-600 hover:bg-green-700" onClick={() => handleAction('complete')}>
+                        <CheckCircle className="mr-2 h-4 w-4" /> Finalizar Entrega
                      </Button>
                  )}
             </CardFooter>

@@ -7,6 +7,7 @@ import { Badge } from '../../../components/ui/badge';
 import { Button } from '../../../components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
+import toast from 'react-hot-toast';
 
 interface Delivery {
   id: string;
@@ -56,6 +57,17 @@ export default function CourierMyDeliveries() {
     }
   };
 
+  const handleAction = async (id: string, action: 'pickup' | 'complete' | 'cancel') => {
+      try {
+          await api.post(`/deliveries/${id}/${action}`);
+          toast.success('Status atualizado!');
+          fetchDeliveries();
+      } catch (error) {
+          console.error(error);
+          toast.error('Erro ao atualizar status.');
+      }
+  };
+
   return (
     <DashboardLayout>
       <div className="flex items-center gap-4 mb-6">
@@ -74,9 +86,10 @@ export default function CourierMyDeliveries() {
       ) : (
         <div className="grid gap-4">
           {deliveries.map((delivery) => (
-            <Link key={delivery.id} to={`/courier/deliveries/${delivery.id}`}>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <div key={delivery.id}>
+              <Card className="hover:shadow-md transition-shadow">
+                <Link to={`/courier/deliveries/${delivery.id}`}>
+                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 cursor-pointer">
                   <CardTitle className="text-sm font-medium">
                     {delivery.business.name}
                   </CardTitle>
@@ -84,7 +97,7 @@ export default function CourierMyDeliveries() {
                     {statusMap[delivery.status]}
                   </Badge>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="cursor-pointer">
                   <div className="grid gap-1 text-sm mt-2">
                     <p><strong>De:</strong> {delivery.pickupAddress}</p>
                     <p><strong>Para:</strong> {delivery.dropoffAddress}</p>
@@ -94,8 +107,38 @@ export default function CourierMyDeliveries() {
                     </div>
                   </div>
                 </CardContent>
+                </Link>
+                {/* Actions */}
+                {(delivery.status === 'ACCEPTED' || delivery.status === 'PICKED_UP') && (
+                    <div className="px-6 pb-4 flex gap-2">
+                        {delivery.status === 'ACCEPTED' && (
+                            <>
+                                <Button size="sm" className="w-full" onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleAction(delivery.id, 'pickup');
+                                }}>
+                                    Retirar
+                                </Button>
+                                <Button size="sm" variant="destructive" className="w-full" onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleAction(delivery.id, 'cancel');
+                                }}>
+                                    Cancelar
+                                </Button>
+                            </>
+                        )}
+                         {delivery.status === 'PICKED_UP' && (
+                             <Button size="sm" className="w-full bg-green-600 hover:bg-green-700" onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleAction(delivery.id, 'complete');
+                                }}>
+                                    Concluir Entrega
+                                </Button>
+                         )}
+                    </div>
+                )}
               </Card>
-            </Link>
+            </div>
           ))}
         </div>
       )}
