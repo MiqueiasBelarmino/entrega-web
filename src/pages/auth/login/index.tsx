@@ -13,7 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Label } from '../../../components/ui/label';
 
 const loginSchema = z.object({
-  phone: z.string().min(14, 'Telefone inválido'), // +55 11 99999-9999
+  phone: z.string().min(11, 'Telefone inválido'), // +55 11 99999-9999
   channel: z.enum(['SMS', 'WHATSAPP']),
 });
 
@@ -78,10 +78,10 @@ export default function Login() {
                 control={control}
                 render={({ field: { onChange, value, onBlur } }) => (
                   <PatternFormat
-                    format="+55 ## #####-####"
+                    format="## #####-####"
                     mask="_"
                     customInput={Input}
-                    placeholder="+55 11 99999-9999"
+                    placeholder="18 99999-9999"
                     value={value}
                     onValueChange={(values) => {
                       onChange(values.formattedValue);

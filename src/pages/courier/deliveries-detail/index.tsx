@@ -7,6 +7,7 @@ import { Badge } from '../../../components/ui/badge';
 import { Button } from '../../../components/ui/button';
 import { ArrowLeft, CheckCircle, Package, Play, XCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { statusMap } from '@/lib/utils';
 
 interface Delivery {
   id: string;
@@ -122,7 +123,7 @@ export default function CourierDeliveryDetail() {
                         <CardTitle>{delivery.business.name}</CardTitle>
                         <CardDescription>Entrega disponível</CardDescription>
                     </div>
-                    <Badge className="text-lg h-min">{delivery.status}</Badge>
+                    <Badge className="text-lg h-min">{statusMap[delivery.status]}</Badge>
                 </div>
             </CardHeader>
             <CardContent className="space-y-6">
