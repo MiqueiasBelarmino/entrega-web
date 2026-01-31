@@ -5,7 +5,7 @@ interface User {
   id: string;
   name: string;
   email?: string;
-  role: 'MERCHANT' | 'COURIER';
+  role: 'MERCHANT' | 'COURIER' | 'ADMIN';
   phoneE164: string;
   businesses?: { 
     id: string; 

@@ -23,6 +23,11 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
              <span className="text-sm text-gray-600 hidden md:inline">
                Olá, {user?.name.split(' ')[0]}
              </span>
+             {user?.role === 'ADMIN' && (
+                <Button variant="ghost" size="sm" onClick={() => navigate('/admin')} className="text-primary font-bold">
+                  Admin
+                </Button>
+             )}
              <Button variant="ghost" size="icon" onClick={() => navigate('/merchant/settings')} title="Configurações">
                <Settings className="h-5 w-5" />
              </Button>

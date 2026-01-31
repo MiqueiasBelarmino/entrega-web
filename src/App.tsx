@@ -13,7 +13,14 @@ import CourierMyDeliveries from './pages/courier/deliveries-list';
 import CourierDeliveryDetail from './pages/courier/deliveries-detail';
 import MerchantSettings from './pages/merchant/settings';
 
-const ProtectedRoute = ({ role }: { role?: 'MERCHANT' | 'COURIER' }) => {
+import AdminLayout from './pages/admin/layout';
+import AdminDashboard from './pages/admin/dashboard';
+import AdminDeliveries from './pages/admin/deliveries';
+import AdminDeliveryDetail from './pages/admin/deliveries/detail';
+import AdminBusinesses from './pages/admin/businesses';
+import AdminUsers from './pages/admin/users';
+
+const ProtectedRoute = ({ role }: { role?: 'MERCHANT' | 'COURIER' | 'ADMIN' }) => {
   const { user, isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return <div>Loading...</div>;
@@ -30,8 +37,8 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/login" element={isAuthenticated ? <Navigate to={user?.role === 'MERCHANT' ? '/merchant' : '/courier'} /> : <Login />} />
-      <Route path="/verify" element={isAuthenticated ? <Navigate to={user?.role === 'MERCHANT' ? '/merchant' : '/courier'} /> : <Verify />} />
+      <Route path="/login" element={isAuthenticated ? <Navigate to={user?.role === 'ADMIN' ? '/admin' : user?.role === 'MERCHANT' ? '/merchant' : '/courier'} /> : <Login />} />
+      <Route path="/verify" element={isAuthenticated ? <Navigate to={user?.role === 'ADMIN' ? '/admin' : user?.role === 'MERCHANT' ? '/merchant' : '/courier'} /> : <Verify />} />
       
       {/* Merchant Routes */}
       <Route element={<ProtectedRoute role="MERCHANT" />}>
@@ -46,6 +53,17 @@ function AppRoutes() {
         <Route path="/courier" element={<CourierDashboard />} />
         <Route path="/courier/my-deliveries" element={<CourierMyDeliveries />} />
         <Route path="/courier/deliveries/:id" element={<CourierDeliveryDetail />} />
+      </Route>
+
+      {/* Admin Routes */}
+      <Route element={<ProtectedRoute role="ADMIN" />}>
+        <Route path="/admin" element={<AdminLayout />}>
+           <Route index element={<AdminDashboard />} />
+           <Route path="deliveries" element={<AdminDeliveries />} />
+           <Route path="deliveries/:id" element={<AdminDeliveryDetail />} />
+           <Route path="businesses" element={<AdminBusinesses />} />
+           <Route path="users" element={<AdminUsers />} />
+        </Route>
       </Route>
 
       <Route path="/" element={<Navigate to="/login" />} />
