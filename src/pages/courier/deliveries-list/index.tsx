@@ -57,14 +57,25 @@ export default function CourierMyDeliveries() {
     }
   };
 
-  const handleAction = async (id: string, action: 'pickup' | 'complete' | 'cancel') => {
+  const handleAction = async (id: string, action: 'pickup' | 'complete' | 'cancel' | 'accept') => {
       try {
           await api.post(`/deliveries/${id}/${action}`);
           toast.success('Status atualizado!');
+          
+          if (action === 'accept') {
+             navigate(`/courier/deliveries/${id}`);
+             return;
+          }
+          
           fetchDeliveries();
-      } catch (error) {
+      } catch (error: any) {
           console.error(error);
-          toast.error('Erro ao atualizar status.');
+          if (action === 'accept' && error.response?.status === 409) {
+             toast.error('Esta entrega já foi aceita por outro entregador.');
+             setDeliveries(prev => prev.filter(d => d.id !== id));
+          } else {
+             toast.error('Erro ao atualizar status.');
+          }
       }
   };
 
@@ -109,8 +120,16 @@ export default function CourierMyDeliveries() {
                 </CardContent>
                 </Link>
                 {/* Actions */}
-                {(delivery.status === 'ACCEPTED' || delivery.status === 'PICKED_UP') && (
+                {(delivery.status === 'ACCEPTED' || delivery.status === 'PICKED_UP' || delivery.status === 'AVAILABLE') && (
                     <div className="px-6 pb-4 flex gap-2">
+                        {delivery.status === 'AVAILABLE' && (
+                            <Button size="sm" className="w-full" onClick={(e) => {
+                                e.stopPropagation();
+                                handleAction(delivery.id, 'accept');
+                            }}>
+                                Aceitar
+                            </Button>
+                        )}
                         {delivery.status === 'ACCEPTED' && (
                             <>
                                 <Button size="sm" className="w-full" onClick={(e) => {
