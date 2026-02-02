@@ -148,9 +148,6 @@ export default function CourierDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold"></h1>
-      </div>
 
       {loading ? (
         <div>Carregando...</div>
@@ -160,7 +157,7 @@ export default function CourierDashboard() {
             {activeDeliveries.length > 0 && (
                 <section>
                   <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl font-semibold mb-4">Minhas Entregas Ativas</h2>
+                    <h2 className="text-xl font-semibold mb-4">Minhas Entregas</h2>
                     <Button variant="outline" onClick={fetchAllDeliveries}>Atualizar</Button>
                   </div>
                     <div className="grid gap-4">

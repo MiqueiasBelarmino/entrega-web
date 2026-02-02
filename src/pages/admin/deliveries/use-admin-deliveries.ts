@@ -31,7 +31,6 @@ export function useAdminDeliveries() {
   });
 
   const fetchDeliveries = useCallback(async () => {
-    console.log(filters.period);
     try {
       setLoading(true);
       const params: any = { 

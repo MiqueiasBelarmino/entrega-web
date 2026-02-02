@@ -46,7 +46,6 @@ export function useAdminDashboard() {
         api.get('/admin/businesses', { params: { status: 'PENDING' } }),
         api.get('/admin/deliveries', { params: { status: 'ISSUE' } })
       ]);
-      console.log(statsRes.data);
       setStats(statsRes.data);
       setPendingBusinesses(businessesRes.data);
       setIssueDeliveries(deliveriesRes.data);

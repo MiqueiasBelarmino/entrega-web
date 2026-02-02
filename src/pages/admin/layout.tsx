@@ -1,7 +1,7 @@
 
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth-context';
-import { LayoutDashboard, Package, Building2, Users, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Package, Building2, Users, LogOut, Menu, X, Settings } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Button } from '../../components/ui/button';
 import { useState } from 'react';
@@ -16,6 +16,7 @@ export default function AdminLayout() {
     { href: '/admin/deliveries', label: 'Entregas', icon: Package },
     { href: '/admin/businesses', label: 'Empresas', icon: Building2 },
     { href: '/admin/users', label: 'Usuários', icon: Users },
+    { href: '/admin/settings/integrations', label: 'Integrações', icon: Settings },
   ];
 
   return (

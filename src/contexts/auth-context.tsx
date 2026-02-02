@@ -6,6 +6,7 @@ interface User {
   name: string;
   email?: string;
   role: 'MERCHANT' | 'COURIER' | 'ADMIN';
+  isRoot: boolean;
   phoneE164: string;
   businesses?: { 
     id: string; 
@@ -19,6 +20,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  isRoot: boolean;
   login: (token: string) => Promise<void>;
   logout: () => void;
   updateUser: (user: User) => void;
@@ -62,7 +64,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, isRoot: user?.isRoot ?? false, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

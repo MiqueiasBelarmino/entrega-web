@@ -19,6 +19,7 @@ import AdminDeliveries from './pages/admin/deliveries';
 import AdminDeliveryDetail from './pages/admin/deliveries/detail';
 import AdminBusinesses from './pages/admin/businesses';
 import AdminUsers from './pages/admin/users';
+import IntegrationsSettings from './pages/admin/settings/integrations';
 
 const ProtectedRoute = ({ role }: { role?: 'MERCHANT' | 'COURIER' | 'ADMIN' }) => {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -63,6 +64,7 @@ function AppRoutes() {
            <Route path="deliveries/:id" element={<AdminDeliveryDetail />} />
            <Route path="businesses" element={<AdminBusinesses />} />
            <Route path="users" element={<AdminUsers />} />
+           <Route path="settings/integrations" element={<IntegrationsSettings />} />
         </Route>
       </Route>
 
