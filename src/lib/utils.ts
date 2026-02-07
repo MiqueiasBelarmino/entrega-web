@@ -33,3 +33,13 @@ export const statusMap: Record<string, string> = {
   COMPLETED: 'Concluída',
   CANCELED: 'Cancelada',
 };
+
+export const roleMap: Record<string, string> = {
+  ADMIN: 'Administrador',
+  MERCHANT: 'Comerciante',
+  COURIER: 'Entregador',
+};
+
+export function getRoleLabel(role: string): string {
+  return roleMap[role] || role;
+}

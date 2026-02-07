@@ -25,6 +25,7 @@ import {
 import { MoreHorizontal, RefreshCw, Shield, UserX, UserCheck } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { getRoleLabel } from '@/lib/utils';
 
 export default function AdminUsers() {
   const { users, loading, updateUserRole, toggleUserStatus, refresh } = useAdminUsers();
@@ -85,7 +86,7 @@ export default function AdminUsers() {
                   <TableCell>{user.phoneE164}</TableCell>
                   <TableCell>
                     <Badge variant={getRoleBadge(user.role) as any}>
-                      {user.role}
+                      {getRoleLabel(user.role)}
                     </Badge>
                   </TableCell>
                   <TableCell>
