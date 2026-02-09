@@ -5,9 +5,8 @@ import { DashboardLayout } from '../../../components/layout/dashboard-layout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../../../components/ui/card';
 import { Badge } from '../../../components/ui/badge';
 import { Button } from '../../../components/ui/button';
-import { ArrowLeft, CheckCircle, Package, Play, XCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Package, Play, XCircle, AlertTriangle } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { statusMap } from '@/lib/utils';
 
 interface Delivery {
   id: string;
@@ -21,9 +20,18 @@ interface Delivery {
   };
   merchant: {
       name: string;
-      phoneE164: string;
+      phoneE164?: string;
   };
 }
+
+const statusMap: Record<string, string> = {
+  AVAILABLE: 'Disponível',
+  ACCEPTED: 'Aceita',
+  PICKED_UP: 'Em Trânsito',
+  COMPLETED: 'Concluída',
+  CANCELED: 'Cancelada',
+  ISSUE: 'Problema',
+};
 
 export default function CourierDeliveryDetail() {
   const { id } = useParams();
@@ -74,15 +82,24 @@ export default function CourierDeliveryDetail() {
     }
   };
   
-  const handleAction = async (action: 'accept' | 'pickup' | 'complete' | 'cancel') => {
+  const handleAction = async (action: 'accept' | 'pickup' | 'complete' | 'cancel' | 'issue') => {
       if (!delivery) return;
       try {
-          await api.post(`/deliveries/${delivery.id}/${action}`);
+          let url = `/deliveries/${delivery.id}/${action}`;
+          let body = {};
+
+          if (action === 'issue') {
+              const reason = window.prompt("Descreva o problema:");
+              if (!reason) return;
+              body = { reason };
+          }
+
+          await api.post(url, body);
           toast.success(`Status atualizado com sucesso!`);
           fetchDelivery(delivery.id);
-      } catch (e) {
+      } catch (e: any) {
           console.error(e);
-          toast.error("Erro ao atualizar status");
+          toast.error(e.response?.data?.message || "Erro ao atualizar status");
       }
   }
 
@@ -110,10 +127,11 @@ export default function CourierDeliveryDetail() {
                     <div>
                         <CardTitle>{delivery.business.name}</CardTitle>
                         <CardDescription>
-                            {delivery.merchant?.name && <span>Responsável: {delivery.merchant.name} - {delivery.merchant.phoneE164}</span>}
+                            {delivery.merchant?.name && <span>Responsável: {delivery.merchant.name}</span>}
+                            {delivery.merchant?.phoneE164 && <span> - {delivery.merchant.phoneE164}</span>}
                         </CardDescription>
                     </div>
-                    <Badge className="text-lg h-min">{statusMap[delivery.status]}</Badge>
+                    <Badge className="text-lg h-min" variant={delivery.status === 'ISSUE' ? 'destructive' : 'default'}>{statusMap[delivery.status] || delivery.status}</Badge>
                 </div>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -140,7 +158,7 @@ export default function CourierDeliveryDetail() {
                     <p className="text-2xl font-bold">R$ {Number(delivery.price).toFixed(2)}</p>
                 </div>
             </CardContent>
-            <CardFooter className="flex flex-col sm:flex-row gap-3">
+            <CardFooter className="flex flex-col sm:flex-row gap-3 flex-wrap">
                  {delivery.status === 'AVAILABLE' && (
                      <Button className="w-full sm:w-auto" onClick={() => handleAction('accept')}>
                         <CheckCircle className="mr-2 h-4 w-4" /> Aceitar Corrida
@@ -155,13 +173,21 @@ export default function CourierDeliveryDetail() {
                         <Button variant="destructive" className="w-full sm:w-auto" onClick={() => handleAction('cancel')}>
                             <XCircle className="mr-2 h-4 w-4" /> Cancelar
                         </Button>
+                         <Button variant="outline" className="w-full sm:w-auto border-red-200 text-red-600 hover:bg-red-50" onClick={() => handleAction('issue')}>
+                            <AlertTriangle className="mr-2 h-4 w-4" /> Reportar Problema
+                        </Button>
                     </>
                  )}
 
                  {delivery.status === 'PICKED_UP' && (
+                    <>
                      <Button className="w-full sm:w-auto bg-green-600 hover:bg-green-700" onClick={() => handleAction('complete')}>
                         <CheckCircle className="mr-2 h-4 w-4" /> Finalizar Entrega
                      </Button>
+                      <Button variant="outline" className="w-full sm:w-auto border-red-200 text-red-600 hover:bg-red-50" onClick={() => handleAction('issue')}>
+                            <AlertTriangle className="mr-2 h-4 w-4" /> Reportar Problema
+                        </Button>
+                    </>
                  )}
             </CardFooter>
         </Card>
