@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../../lib/api';
+import { subscribeToPush } from '../../../lib/push-notifications';
 import { DashboardLayout } from '../../../components/layout/dashboard-layout';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Badge } from '../../../components/ui/badge';
@@ -63,6 +64,16 @@ export default function CourierDashboard() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const enablePush = async () => {
+      try {
+          await subscribeToPush();
+          toast.success('Notificações ativadas!');
+      } catch (error: any) {
+          console.error(error);
+          toast.error(error.message || 'Erro ao ativar notificações.');
+      }
   };
 
   const handleAction = async (id: string, action: 'pickup' | 'complete' | 'cancel' | 'accept') => {
@@ -160,7 +171,10 @@ export default function CourierDashboard() {
                 <section>
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-semibold mb-4">Minhas Entregas</h2>
-                    <Button variant="outline" onClick={fetchAllDeliveries}>Atualizar</Button>
+                    <div className="flex gap-2">
+                        <Button variant="outline" onClick={enablePush}>🔔 Ativar Notificações</Button>
+                        <Button variant="outline" onClick={fetchAllDeliveries}>Atualizar</Button>
+                    </div>
                   </div>
                     <div className="grid gap-4">
                         {activeDeliveries.map((delivery) => (

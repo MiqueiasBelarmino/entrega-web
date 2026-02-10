@@ -3,14 +3,15 @@ import { ProfileForm } from './profile-form';
 import { BusinessForm } from './business-form';
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
-import { useAuth } from '@/contexts/auth-context';
+import { subscribeToPush } from '@/lib/push-notifications';
+import toast from 'react-hot-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function MerchantSettings() {
-  const { user } = useAuth();
+  /* const { user } = useAuth(); */
   const [businesses, setBusinesses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -37,7 +38,16 @@ export default function MerchantSettings() {
       </Button>
       <div className="max-w-2xl mx-auto">
 
-        <h1 className="text-2xl font-bold mb-6">Configurações</h1>
+        <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold">Configurações</h1>
+            <Button variant="outline" onClick={() => {
+                subscribeToPush()
+                    .then(() => toast.success('Notificações ativadas!'))
+                    .catch((err) => toast.error(err.message || 'Erro ao ativar.'));
+            }}>
+                🔔 Ativar Notificações
+            </Button>
+        </div>
         
         <div className="grid gap-6">
           
