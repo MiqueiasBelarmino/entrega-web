@@ -10,6 +10,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
       includeAssets: ['favicon.ico', 'pwa-icon.svg'],
       manifest: {
         name: 'Entrega Certa',
@@ -53,5 +56,8 @@ export default defineConfig({
   server: {
     host: true,
     port: 5173,
+    allowedHosts: [
+      '27ea-201-63-79-186.ngrok-free.app'
+    ]
   },
 })
