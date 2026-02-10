@@ -25,3 +25,21 @@ export function formatDateTime(date: string | Date): string {
     minute: '2-digit'
   })
 }
+
+export const statusMap: Record<string, string> = {
+  AVAILABLE: 'Disponível',
+  ACCEPTED: 'Aceita',
+  PICKED_UP: 'Em Trânsito',
+  COMPLETED: 'Concluída',
+  CANCELED: 'Cancelada',
+};
+
+export const roleMap: Record<string, string> = {
+  ADMIN: 'Administrador',
+  MERCHANT: 'Comerciante',
+  COURIER: 'Entregador',
+};
+
+export function getRoleLabel(role: string): string {
+  return roleMap[role] || role;
+}
