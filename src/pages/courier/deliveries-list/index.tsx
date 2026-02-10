@@ -27,6 +27,7 @@ const statusMap: Record<string, string> = {
   PICKED_UP: 'Em Trânsito',
   COMPLETED: 'Concluída',
   CANCELED: 'Cancelada',
+  ISSUE: 'Problema Reportado',
 };
 
 const statusColor: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
@@ -35,6 +36,7 @@ const statusColor: Record<string, "default" | "secondary" | "destructive" | "out
   PICKED_UP: 'default',
   COMPLETED: 'outline',
   CANCELED: 'destructive',
+  ISSUE: 'destructive',
 };
 
 export default function CourierMyDeliveries() {
