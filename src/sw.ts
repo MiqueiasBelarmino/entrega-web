@@ -1,5 +1,10 @@
+/// <reference lib="webworker" />
+declare let self: ServiceWorkerGlobalScope & { __WB_MANIFEST: any };
 
-// Service Worker for Push Notifications
+// This is needed for vite-plugin-pwa to inject the manifest
+// @ts-ignore
+console.log(self.__WB_MANIFEST);
+
 self.addEventListener('push', function(event: any) {
   if (event.data) {
     const data = event.data.json();
@@ -38,15 +43,15 @@ self.addEventListener('notificationclick', function(event: any) {
   if (event.action === 'explore' || !event.action) {
      event.waitUntil(
         // @ts-ignore
-        clients.matchAll({type: 'window'}).then( windowClients => {
+        self.clients.matchAll({type: 'window'}).then( windowClients => {
             for (let client of windowClients) {
-                if (client.url === event.notification.data.url && 'focus' in client) {
+                if (client.url === (event.notification as any).data.url && 'focus' in client) {
                     return client.focus();
                 }
             }
             // @ts-ignore
-            if (clients.openWindow) {
-                return clients.openWindow(event.notification.data.url);
+            if (self.clients.openWindow) {
+                return self.clients.openWindow((event.notification as any).data.url);
             }
         })
     );

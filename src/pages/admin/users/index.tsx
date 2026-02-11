@@ -79,7 +79,7 @@ export default function AdminUsers() {
                   <TableCell className="font-medium">
                     <div className="flex items-center gap-2">
                       {user.name}
-                      {user.isRoot && <Shield className="h-3 w-3 text-yellow-600" title="Super Admin" />}
+                      {user.isRoot && <span title="Super Admin"><Shield className="h-3 w-3 text-yellow-600" /></span>}
                     </div>
                     {user.email && <div className="text-xs text-muted-foreground">{user.email}</div>}
                   </TableCell>
