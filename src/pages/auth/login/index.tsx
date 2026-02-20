@@ -94,7 +94,7 @@ export default function Login() {
             </div>
 
             <div className="space-y-2">
-              <Label>Canal de envio</Label>
+              <Label>Receber código via</Label>
               <Controller
                 control={control}
                 name="channel"
