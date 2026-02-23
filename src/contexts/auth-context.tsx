@@ -8,8 +8,8 @@ interface User {
   role: 'MERCHANT' | 'COURIER' | 'ADMIN';
   isRoot: boolean;
   phoneE164: string;
-  businesses?: { 
-    id: string; 
+  businesses?: {
+    id: string;
     name: string;
     address?: string;
     defaultDeliveryPrice?: number | string;
@@ -34,17 +34,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-        api.get('/auth/me')
-        .then(response => setUser(response.data))
-        .catch(() => {
-            localStorage.removeItem('token');
-            setUser(null);
-        })
-        .finally(() => setIsLoading(false));
-    } else {
-        setIsLoading(false);
+    if (!token) {
+      setIsLoading(false); // Libera o app sem bater na API
+      return;
     }
+
+    api.get('/auth/me')
+      .then(response => setUser(response.data))
+      .catch(() => {
+        localStorage.removeItem('token');
+        setUser(null);
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   const login = async (token: string) => {
