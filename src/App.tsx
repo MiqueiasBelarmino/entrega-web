@@ -27,7 +27,11 @@ const ProtectedRoute = ({ role }: { role?: 'MERCHANT' | 'COURIER' | 'ADMIN' }) =
 
   if (isLoading) return <div>Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" />;
-  if (role && user?.role !== role) return <Navigate to="/" />; // or unauthorized page
+  // Redireciona para a home específica do cargo dele em vez da raiz pública
+  if (role && user?.role !== role) {
+    const target = user?.role === 'ADMIN' ? '/admin' : user?.role === 'MERCHANT' ? '/merchant' : '/courier';
+    return <Navigate to={target} />;
+  }
 
   return <Outlet />;
 };
