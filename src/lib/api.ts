@@ -18,7 +18,11 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      if (!window.location.pathname.includes('/login')) {
+      
+      // SÓ redireciona se NÃO estiver na Landing Page (raiz) E NÃO estiver no login
+      const isPublicPage = window.location.pathname === '/' || window.location.pathname.includes('/login');
+      
+      if (!isPublicPage) {
           window.location.href = '/login';
       }
     }
