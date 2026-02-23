@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './contexts/auth-context';
 import { Toaster } from 'react-hot-toast';
 
 // Placeholders for now
+import LandingPage from './pages/landing';
 import Login from './pages/auth/login';
 import Verify from './pages/auth/verify';
 import MerchantDashboard from './pages/merchant/dashboard';
@@ -68,7 +69,7 @@ function AppRoutes() {
         </Route>
       </Route>
 
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={isAuthenticated ? <Navigate to={user?.role === 'ADMIN' ? '/admin' : user?.role === 'MERCHANT' ? '/merchant' : '/courier'} /> : <LandingPage />} />
     </Routes>
   );
 }
