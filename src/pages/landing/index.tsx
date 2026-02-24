@@ -251,7 +251,7 @@ export default function LandingPage() {
                     <Link to="/login" className="hover:text-orange-600 transition-colors">Login Comerciante</Link>
                     <Link to="/login" className="hover:text-orange-600 transition-colors">Login Entregador</Link>
                     <a href="#" className="hover:text-orange-600 transition-colors">Termos de Uso</a>
-                    <a href="#" className="hover:text-orange-600 transition-colors">Privacidade</a>
+                    <Link to="/privacy" className="hover:text-orange-600 transition-colors">Privacidade</Link>
                 </nav>
                 
                 <p className="text-sm text-slate-400">
