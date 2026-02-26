@@ -12,7 +12,7 @@ export default function LandingPage() {
               <Zap className="w-5 h-5" />
             </div>
             <span className="text-xl font-bold tracking-tight text-slate-800">
-              Entrega Certa
+              Entrega Hub
             </span>
           </div>
           <nav className="flex items-center gap-4">
@@ -199,7 +199,7 @@ export default function LandingPage() {
             
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Por que usar o Entrega Certa?
+                  Por que usar o Entrega Hub?
                 </h2>
                 <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
                   Mais do que organizar, queremos ajudar você a economizar e focar na qualidade do seu produto.
@@ -244,7 +244,7 @@ export default function LandingPage() {
                     <div className="bg-orange-600 text-white p-1 rounded-md">
                         <Zap className="w-4 h-4" />
                     </div>
-                    <span className="text-lg font-bold text-slate-900 tracking-tight">Entrega Certa</span>
+                    <span className="text-lg font-bold text-slate-900 tracking-tight">Entrega Hub</span>
                 </div>
                 
                 <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-slate-500">
@@ -255,7 +255,7 @@ export default function LandingPage() {
                 </nav>
                 
                 <p className="text-sm text-slate-400">
-                    &copy; {new Date().getFullYear()} Entrega Certa. Todos os direitos reservados.
+                    &copy; {new Date().getFullYear()} Entrega Hub. Todos os direitos reservados.
                 </p>
             </div>
         </div>

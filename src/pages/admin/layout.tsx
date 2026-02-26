@@ -24,7 +24,7 @@ export default function AdminLayout() {
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-white border-b sticky top-0 z-20">
          <div className="flex items-center gap-2">
-            <span className="font-bold text-lg text-primary">Entrega Certa</span>
+            <span className="font-bold text-lg text-primary">Entrega Hub</span>
             <span className="text-[10px] bg-slate-900 text-white px-1.5 py-0.5 rounded">ADMIN</span>
          </div>
          <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -46,7 +46,7 @@ export default function AdminLayout() {
         isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <div className="h-16 hidden md:flex items-center px-6 border-b border-gray-200">
-          <span className="font-bold text-xl text-primary">Entrega Certa</span>
+          <span className="font-bold text-xl text-primary">Entrega Hub</span>
           <span className="ml-2 text-xs bg-slate-900 text-white px-1.5 py-0.5 rounded">ADMIN</span>
         </div>
 

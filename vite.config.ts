@@ -15,8 +15,8 @@ export default defineConfig({
       filename: 'sw.ts',
       includeAssets: ['favicon.ico', 'pwa-icon.svg'],
       manifest: {
-        name: 'Entrega Certa',
-        short_name: 'Entrega Certa',
+        name: 'Entrega Hub',
+        short_name: 'Entrega Hub',
         start_url: '/',
         display: 'standalone',
         theme_color: '#ffffff',

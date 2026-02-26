@@ -85,7 +85,7 @@ export default function SignupMerchant() {
           </div>
           <CardTitle className="text-2xl">Cadastro de Lojista</CardTitle>
           <CardDescription>
-            Crie sua conta para começar a enviar pedidos através do Entrega Certa.
+            Crie sua conta para começar a enviar pedidos através do Entrega Hub.
           </CardDescription>
         </CardHeader>
         <CardContent>

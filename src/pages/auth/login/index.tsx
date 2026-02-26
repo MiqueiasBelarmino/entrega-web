@@ -62,7 +62,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Entrega Certa</CardTitle>
+          <CardTitle>Entrega Hub</CardTitle>
           <CardDescription>Entre com seu telefone para continuar</CardDescription>
         </CardHeader>
         <CardContent>
