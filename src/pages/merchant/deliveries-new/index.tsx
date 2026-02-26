@@ -38,6 +38,16 @@ export default function NewDelivery() {
     }
   });
 
+  // Redirect if pending
+  useEffect(() => {
+    if (user?.businesses && user.businesses.length > 0) {
+      if (user.businesses[0].status === 'PENDING') {
+        toast.error('Sua conta ainda está em análise.');
+        navigate('/merchant');
+      }
+    }
+  }, [user, navigate]);
+
   // Pre-select first business if available
   useEffect(() => {
     if (user?.businesses && user.businesses.length > 0) {

@@ -15,9 +15,10 @@ import type { Delivery } from './use-merchant-deliveries';
 
 interface DeliveriesTableProps {
   deliveries: Delivery[];
+  onCancel?: (id: string, reason?: string) => void;
 }
 
-export function DeliveriesTable({ deliveries }: DeliveriesTableProps) {
+export function DeliveriesTable({ deliveries, onCancel }: DeliveriesTableProps) {
   return (
     <div className="rounded-md border bg-card">
       <Table>
@@ -52,7 +53,20 @@ export function DeliveriesTable({ deliveries }: DeliveriesTableProps) {
               <TableCell>
                 {delivery.courier?.name || '-'}
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-right flex items-center justify-end gap-2">
+                {(delivery.status === 'AVAILABLE' || delivery.status === 'ACCEPTED') && onCancel && (
+                  <Button 
+                    variant="destructive" 
+                    size="sm" 
+                    onClick={() => {
+                      if (confirm('Deseja realmente cancelar esta entrega?')) {
+                        onCancel(delivery.id);
+                      }
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                )}
                 <Button variant="ghost" size="icon" asChild>
                   <Link to={`/merchant/deliveries/${delivery.id}`}>
                     <Eye className="h-4 w-4" />

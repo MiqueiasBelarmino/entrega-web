@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAdminUsers, UserRole } from './use-admin-users';
 import {
   Table,
@@ -22,13 +23,15 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, RefreshCw, Shield, UserX, UserCheck } from "lucide-react";
+import { MoreHorizontal, RefreshCw, Shield, UserX, UserCheck, Plus } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { getRoleLabel } from '@/lib/utils';
+import { CreateUserModal } from './create-user-modal';
 
 export default function AdminUsers() {
   const { users, loading, updateUserRole, toggleUserStatus, refresh } = useAdminUsers();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getRoleBadge = (role: UserRole) => {
     switch (role) {
@@ -43,10 +46,21 @@ export default function AdminUsers() {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Gerenciar Usuários</h1>
-        <Button variant="outline" size="icon" onClick={refresh} disabled={loading}>
-          <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" size="icon" onClick={refresh} disabled={loading}>
+            <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+          </Button>
+          <Button onClick={() => setIsModalOpen(true)}>
+            <Plus className="mr-2 h-4 w-4" /> Novo Usuário
+          </Button>
+        </div>
       </div>
+
+      <CreateUserModal 
+        open={isModalOpen} 
+        onOpenChange={setIsModalOpen} 
+        onSuccess={refresh} 
+      />
 
       <div className="rounded-md border bg-card">
         <Table>

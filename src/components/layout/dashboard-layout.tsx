@@ -16,7 +16,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
              className="font-bold text-xl cursor-pointer" 
              onClick={() => navigate(user?.role === 'MERCHANT' ? '/merchant' : '/courier')}
           >
-            Entrega Certa
+            Entrega Hub
           </div>
           
           <div className="flex items-center gap-4">

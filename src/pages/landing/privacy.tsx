@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
           <p className="text-slate-500 text-sm mb-8">Última atualização: {new Date().toLocaleDateString('pt-BR')}</p>
 
           <p className="lead text-lg text-slate-600 mb-8">
-            A sua privacidade é importante para nós. Esta Política de Privacidade explica como o <strong>Entrega Certa</strong> coleta, usa e protege as suas informações quando você utiliza a nossa plataforma, focada no nível atual do nosso Produto Mínimo Viável (MVP).
+            A sua privacidade é importante para nós. Esta Política de Privacidade explica como o <strong>Entrega Hub</strong> coleta, usa e protege as suas informações quando você utiliza a nossa plataforma, focada no nível atual do nosso Produto Mínimo Viável (MVP).
           </p>
 
           <h2 className="text-2xl font-semibold text-slate-800 mt-10 mb-4 border-b border-slate-100 pb-2">1. Informações que Coletamos</h2>
@@ -49,7 +49,7 @@ export default function PrivacyPolicyPage() {
 
           <h2 className="text-2xl font-semibold text-slate-800 mt-10 mb-4 border-b border-slate-100 pb-2">3. Compartilhamento de Dados</h2>
           <p className="text-slate-600 mb-6">
-            O <strong>Entrega Certa</strong> atua apenas como uma ponte tecnológica. As informações do endereço de entrega são compartilhadas <strong>exclusivamente</strong> com o entregador parceiro que aceitou a corrida, afim de que a mesma possa ser concluída. Nós não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros para fins de marketing.
+            O <strong>Entrega Hub</strong> atua apenas como uma ponte tecnológica. As informações do endereço de entrega são compartilhadas <strong>exclusivamente</strong> com o entregador parceiro que aceitou a corrida, afim de que a mesma possa ser concluída. Nós não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros para fins de marketing.
           </p>
 
           <h2 className="text-2xl font-semibold text-slate-800 mt-10 mb-4 border-b border-slate-100 pb-2">4. Retenção e Segurança</h2>
