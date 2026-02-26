@@ -8,13 +8,11 @@ import { api } from '../../../lib/api';
 import toast from 'react-hot-toast';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Label } from '../../../components/ui/label';
 
 const loginSchema = z.object({
   phone: z.string().min(11, 'Telefone inválido'), // +55 11 99999-9999
-  channel: z.enum(['SMS', 'WHATSAPP']),
 });
 
 type LoginForm = z.infer<typeof loginSchema>;
@@ -27,7 +25,6 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
     defaultValues: {
       phone: '',
-      channel: 'SMS',
     }
   });
 
@@ -48,7 +45,6 @@ export default function Login() {
       
       await api.post('/auth/start', {
         phone: `+${phoneClean}`, // Garante formato E.164 básico sem espaços
-        channel: data.channel,
       });
 
       toast.success('Código enviado!');
@@ -93,24 +89,7 @@ export default function Login() {
               {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
             </div>
 
-            <div className="space-y-2">
-              <Label>Receber código via</Label>
-              <Controller
-                control={control}
-                name="channel"
-                render={({ field }) => (
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o canal" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="SMS">SMS</SelectItem>
-                      <SelectItem value="WHATSAPP">WhatsApp</SelectItem>
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-            </div>
+
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? 'Enviando...' : 'Enviar Código'}
