@@ -12,6 +12,7 @@ interface User {
     id: string;
     name: string;
     address?: string;
+    status: 'ACTIVE' | 'PENDING' | 'BLOCKED';
     defaultDeliveryPrice?: number | string;
   }[];
 }

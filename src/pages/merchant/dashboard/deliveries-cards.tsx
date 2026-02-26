@@ -7,9 +7,10 @@ import type { Delivery } from './use-merchant-deliveries';
 
 interface DeliveriesCardsProps {
   deliveries: Delivery[];
+  onCancel?: (id: string, reason?: string) => void;
 }
 
-export function DeliveriesCards({ deliveries }: DeliveriesCardsProps) {
+export function DeliveriesCards({ deliveries, onCancel }: DeliveriesCardsProps) {
   return (
     <div className="grid gap-4">
       {deliveries.map((delivery) => (
@@ -44,11 +45,26 @@ export function DeliveriesCards({ deliveries }: DeliveriesCardsProps) {
                   currency: 'BRL',
                 }).format(Number(delivery.price))}
               </span>
-              <Button size="sm" variant="outline" asChild>
-                <Link to={`/merchant/deliveries/${delivery.id}`}>
-                  Ver detalhes
-                </Link>
-              </Button>
+              <div className="flex gap-2">
+                {(delivery.status === 'AVAILABLE' || delivery.status === 'ACCEPTED') && onCancel && (
+                  <Button 
+                    variant="destructive" 
+                    size="sm" 
+                    onClick={() => {
+                      if (confirm('Deseja realmente cancelar esta entrega?')) {
+                        onCancel(delivery.id);
+                      }
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                )}
+                <Button size="sm" variant="outline" asChild>
+                  <Link to={`/merchant/deliveries/${delivery.id}`}>
+                    Ver detalhes
+                  </Link>
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>

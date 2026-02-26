@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { PatternFormat } from 'react-number-format';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../../../lib/api';
 import toast from 'react-hot-toast';
 import { Button } from '../../../components/ui/button';
@@ -49,8 +49,9 @@ export default function Login() {
 
       toast.success('Código enviado!');
       navigate('/verify', { state: { phone: `+${phoneClean}` } });
-    } catch (error) {
-      toast.error('Erro ao enviar código. Verifique o número.');
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Erro ao enviar código. Verifique o número.';
+      toast.error(errorMessage);
       console.error(error);
     } finally {
       setLoading(false);
@@ -94,6 +95,15 @@ export default function Login() {
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? 'Enviando...' : 'Enviar Código'}
             </Button>
+            
+            <div className="pt-4 text-center">
+              <p className="text-sm text-muted-foreground">
+                É um estabelecimento e ainda não tem conta?{' '}
+                <Link to="/signup-merchant" className="text-primary hover:underline font-medium">
+                  Cadastre-se aqui
+                </Link>
+              </p>
+            </div>
           </form>
         </CardContent>
       </Card>

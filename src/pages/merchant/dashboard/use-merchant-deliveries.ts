@@ -140,6 +140,16 @@ export function useMerchantDeliveries() {
     });
   }, [data, filters]);
 
+  const cancelDelivery = async (id: string, reason?: string) => {
+    try {
+      await api.post(`/deliveries/${id}/cancel-merchant`, { reason: reason || 'Merchant canceled' });
+      await fetchDeliveries();
+    } catch (err) {
+      console.error('Failed to cancel delivery', err);
+      throw err;
+    }
+  };
+
   return {
     deliveries: filteredDeliveries,
     loading,
@@ -148,5 +158,6 @@ export function useMerchantDeliveries() {
     filters,
     setFilters,
     refresh: fetchDeliveries,
+    cancelDelivery,
   };
 }

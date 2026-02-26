@@ -7,6 +7,7 @@ import LandingPage from './pages/landing';
 import PrivacyPolicyPage from './pages/landing/privacy';
 import Login from './pages/auth/login';
 import Verify from './pages/auth/verify';
+import SignupMerchant from './pages/auth/signup-merchant';
 import MerchantDashboard from './pages/merchant/dashboard';
 import NewDelivery from './pages/merchant/deliveries-new';
 import MerchantDeliveryDetail from './pages/merchant/deliveries-detail';
@@ -46,6 +47,7 @@ function AppRoutes() {
     <Routes>
       <Route path="/login" element={isAuthenticated ? <Navigate to={user?.role === 'ADMIN' ? '/admin' : user?.role === 'MERCHANT' ? '/merchant' : '/courier'} /> : <Login />} />
       <Route path="/verify" element={isAuthenticated ? <Navigate to={user?.role === 'ADMIN' ? '/admin' : user?.role === 'MERCHANT' ? '/merchant' : '/courier'} /> : <Verify />} />
+      <Route path="/signup-merchant" element={isAuthenticated ? <Navigate to={user?.role === 'ADMIN' ? '/admin' : user?.role === 'MERCHANT' ? '/merchant' : '/courier'} /> : <SignupMerchant />} />
       
       {/* Merchant Routes */}
       <Route element={<ProtectedRoute role="MERCHANT" />}>
