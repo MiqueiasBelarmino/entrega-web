@@ -42,7 +42,7 @@ export function useAdminUsers() {
 
   const updateUserRole = async (id: string, newRole: UserRole) => {
     try {
-      await api.patch(`/admin/users/${id}/role`, { role: newRole });
+      await api.patch(`/admin/users/${id}`, { role: newRole });
       toast.success(`Papel atualizado para ${newRole}`);
       setUsers(prev => prev.map(u => 
         u.id === id ? { ...u, role: newRole } : u
@@ -55,7 +55,7 @@ export function useAdminUsers() {
 
   const toggleUserStatus = async (id: string, isActive: boolean) => {
     try {
-      await api.patch(`/admin/users/${id}/status`, { isActive });
+      await api.patch(`/admin/users/${id}`, { isActive });
       toast.success(isActive ? 'Usuário ativado' : 'Usuário desativado');
       setUsers(prev => prev.map(u => 
         u.id === id ? { ...u, isActive } : u
