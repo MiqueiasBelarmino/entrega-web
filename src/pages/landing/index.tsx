@@ -329,7 +329,7 @@ export default function LandingPage() {
                 <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-slate-500">
                     <Link to="/login" className="hover:text-orange-600 transition-colors">Login Comerciante</Link>
                     <Link to="/login" className="hover:text-orange-600 transition-colors">Login Entregador</Link>
-                    <a href="#" className="hover:text-orange-600 transition-colors">Termos de Uso</a>
+                    <Link to="/terms" className="hover:text-orange-600 transition-colors">Termos de Uso</Link>
                     <Link to="/privacy" className="hover:text-orange-600 transition-colors">Privacidade</Link>
                 </nav>
                 
