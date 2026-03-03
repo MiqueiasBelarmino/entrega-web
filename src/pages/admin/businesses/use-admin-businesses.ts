@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { api } from '../../../lib/api';
 import { toast } from 'react-hot-toast';
 
-export type BusinessStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'SUSPENDED';
+export type BusinessStatus = 'PENDING' | 'ACTIVE' | 'BLOCKED';
 
 export interface AdminBusiness {
   id: string;
@@ -39,7 +39,7 @@ export function useAdminBusinesses() {
 
   const updateStatus = async (id: string, newStatus: BusinessStatus) => {
     try {
-      await api.patch(`/admin/businesses/${id}/status`, { status: newStatus });
+      await api.patch(`/admin/businesses/${id}`, { status: newStatus });
       toast.success(`Status atualizado para ${newStatus}`);
       
       // Optimistic update or refresh

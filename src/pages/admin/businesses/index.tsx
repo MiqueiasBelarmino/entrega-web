@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, RefreshCw, CheckCircle, XCircle, Ban } from "lucide-react";
+import { MoreHorizontal, RefreshCw, CheckCircle, Ban } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -26,11 +26,19 @@ export default function AdminBusinesses() {
 
   const getStatusColor = (status: BusinessStatus) => {
     switch (status) {
-      case 'APPROVED': return 'default'; // dark/black
-      case 'PENDING': return 'outline'; // yellow-ish usually, but outline for now
-      case 'REJECTED': return 'destructive';
-      case 'SUSPENDED': return 'destructive';
-      default: return 'secondary';
+      case 'ACTIVE':  return 'default';
+      case 'PENDING': return 'secondary';
+      case 'BLOCKED': return 'destructive';
+      default:        return 'outline';
+    }
+  };
+
+  const getStatusLabel = (status: BusinessStatus) => {
+    switch (status) {
+      case 'ACTIVE':  return 'Ativo';
+      case 'PENDING': return 'Pendente';
+      case 'BLOCKED': return 'Bloqueado';
+      default:        return status;
     }
   };
 
@@ -80,7 +88,7 @@ export default function AdminBusinesses() {
                   </TableCell>
                   <TableCell>
                     <Badge variant={getStatusColor(business.status) as any}>
-                      {business.status}
+                      {getStatusLabel(business.status)}
                     </Badge>
                   </TableCell>
                   <TableCell className="max-w-[200px] truncate" title={business.address}>
@@ -99,18 +107,18 @@ export default function AdminBusinesses() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Alterar Status</DropdownMenuLabel>
-                        <DropdownMenuItem onClick={() => updateStatus(business.id, 'APPROVED')}>
+                        <DropdownMenuItem onClick={() => updateStatus(business.id, 'ACTIVE')}>
                           <CheckCircle className="mr-2 h-4 w-4 text-green-600" /> Aprovar
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => updateStatus(business.id, 'PENDING')}>
                           Reiniciar Pendência
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => updateStatus(business.id, 'REJECTED')}>
-                           <XCircle className="mr-2 h-4 w-4 text-red-600" /> Rejeitar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => updateStatus(business.id, 'SUSPENDED')}>
-                           <Ban className="mr-2 h-4 w-4 text-orange-600" /> Suspender
+                        <DropdownMenuItem
+                          className="text-red-600 focus:text-red-600"
+                          onClick={() => updateStatus(business.id, 'BLOCKED')}
+                        >
+                           <Ban className="mr-2 h-4 w-4" /> Bloquear
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
