@@ -8,7 +8,7 @@ export default function LandingPage() {
       <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="bg-orange-600 text-white p-1.5 rounded-lg">
+            <div className="bg-primary text-white p-1.5 rounded-lg">
               <Zap className="w-5 h-5" />
             </div>
             <span className="text-xl font-bold tracking-tight text-slate-800">
@@ -24,7 +24,7 @@ export default function LandingPage() {
             </Link>
             <Link
               to="/signup-merchant"
-              className="hidden sm:inline-flex items-center justify-center rounded-full bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all active:scale-95"
+              className="hidden sm:inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all active:scale-95"
             >
               Começar Agora
             </Link>
@@ -55,7 +55,7 @@ export default function LandingPage() {
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
                 to="/signup-courier"
-                className="group flex items-center justify-center gap-2 rounded-full bg-orange-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all active:scale-95"
+                className="group flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-white shadow-lg hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all active:scale-95"
               >
                 Começar Grátis Agora
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -123,7 +123,7 @@ export default function LandingPage() {
                 O preço justo para o tamanho do seu negócio.
               </p>
               <div className="mt-6 flex flex-col items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-700">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
                    🚀 Oferta Especial de Lançamento
                 </span>
                 <p className="text-slate-600 text-sm max-w-md">
@@ -163,7 +163,7 @@ export default function LandingPage() {
                 </div>
                 <Link
                   to="/signup-merchant"
-                  className="mt-8 block rounded-full px-3 py-2 text-center text-sm font-semibold leading-6 bg-slate-50 text-orange-600 ring-1 ring-inset ring-orange-200 hover:ring-orange-600 transition-all active:scale-95"
+                  className="mt-8 block rounded-full px-3 py-2 text-center text-sm font-semibold leading-6 bg-slate-50 text-primary ring-1 ring-inset ring-primary/20 hover:ring-primary transition-all active:scale-95"
                 >
                   Começar Mês Grátis
                 </Link>
@@ -204,7 +204,7 @@ export default function LandingPage() {
                 </div>
                 <Link
                   to="/signup-merchant"
-                  className="mt-8 block rounded-full bg-orange-600 px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 transition-all active:scale-95"
+                  className="mt-8 block rounded-full bg-primary px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary/90 transition-all active:scale-95"
                 >
                   Turbinar Meu Delivery
                 </Link>
@@ -291,7 +291,7 @@ export default function LandingPage() {
                 <div className="mt-16 sm:mt-24">
                     <Link
                         to="/signup-merchant"
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all hover:scale-105 active:scale-95"
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all hover:scale-105 active:scale-95"
                     >
                         Criar Minha Conta Grátis
                         <ArrowRight className="w-5 h-5" />
