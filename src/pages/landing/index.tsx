@@ -255,11 +255,11 @@ export default function LandingPage() {
                   </ul>
                 </div>
                 <a
-                  href="https://wa.me/seu-numero"
+                  href="https://wa.me/5518996514709"
                   target="_blank"
                   className="mt-8 block rounded-full px-3 py-2 text-center text-sm font-semibold leading-6 bg-white text-slate-900 ring-1 ring-inset ring-slate-200 hover:ring-orange-600 transition-all active:scale-95"
                 >
-                  Falar Consultor
+                  Falar Com Consultor
                 </a>
               </div>
             </div>
