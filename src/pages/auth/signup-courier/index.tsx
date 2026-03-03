@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../../lib/api';
 import toast from 'react-hot-toast';
@@ -6,42 +6,26 @@ import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Label } from '../../../components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
 import { PatternFormat } from 'react-number-format';
 import { ArrowLeft } from 'lucide-react';
 
-export default function SignupMerchant() {
+export default function SignupCourier() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
   
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [businessName, setBusinessName] = useState('');
-  const [categoryId, setCategoryId] = useState('');
-  const [businessPhone, setBusinessPhone] = useState('');
-  const [address, setAddress] = useState('');
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  const fetchCategories = async () => {
-    try {
-      const { data } = await api.get('/categories');
-      setCategories(data);
-    } catch (err) {
-      console.error('Error fetching categories:', err);
-    }
-  };
+  const [cpf, setCpf] = useState('');
+  const [cnh, setCnh] = useState('');
+  const [vehiclePlate, setVehiclePlate] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      if (!name || !phone || !businessName || !categoryId) {
-        toast.error('Preencha todos os campos obrigatórios.');
+      if (!name || !phone) {
+        toast.error('Preencha os campos obrigatórios.');
         setLoading(false);
         return;
       }
@@ -56,13 +40,12 @@ export default function SignupMerchant() {
       const payload = {
         name,
         phone: `+55${phoneClean}`,
-        businessName,
-        categoryId,
-        businessPhone: businessPhone ? `+55${businessPhone.replace(/\D/g, '')}` : undefined,
-        address: address || undefined,
+        cpf: cpf.replace(/\D/g, '') || undefined,
+        cnh: cnh.replace(/\D/g, '') || undefined,
+        vehiclePlate: vehiclePlate || undefined,
       };
 
-      await api.post('/auth/register/merchant', payload);
+      await api.post('/auth/register/courier', payload);
       
       toast.success('Cadastro realizado! O código de acesso foi enviado para seu celular.');
       navigate('/verify', { state: { phone: `+55${phoneClean}` } });
@@ -85,9 +68,9 @@ export default function SignupMerchant() {
           >
             <ArrowLeft className="h-4 w-4" /> Voltar
           </button>
-          <CardTitle className="text-2xl">Cadastro de Lojista</CardTitle>
+          <CardTitle className="text-2xl">Cadastro de Entregador</CardTitle>
           <CardDescription>
-            Crie sua conta para começar a enviar pedidos através do Entrega Hub.
+            Crie sua conta e aguarde a aprovação para começar a fazer entregas no Entrega Hub.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -119,68 +102,55 @@ export default function SignupMerchant() {
                   required
                   disabled={loading}
                 />
-                <p className="text-xs text-muted-foreground">O código de acesso será enviado para este número.</p>
               </div>
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-sm font-medium text-muted-foreground border-b pb-2">Dados do Estabelecimento</h3>
-              
-              <div className="space-y-2">
-                <Label htmlFor="businessName">Nome do Estabelecimento *</Label>
-                <Input
-                  id="businessName"
-                  required
-                  placeholder="Nome da sua loja"
-                  value={businessName}
-                  onChange={(e) => setBusinessName(e.target.value)}
-                  disabled={loading}
-                />
-              </div>
+              <h3 className="text-sm font-medium text-muted-foreground border-b pb-2 flex justify-between items-center">
+                <span>Segurança e Identificação</span>
+                <span className="text-xs bg-slate-100 px-2 py-0.5 rounded-full text-slate-500 font-normal">Opcional por enquanto</span>
+              </h3>
 
               <div className="space-y-2">
-                <Label>Categoria *</Label>
-                <Select value={categoryId} onValueChange={setCategoryId} required disabled={loading}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione o segmento" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.id}>
-                        {cat.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="businessPhone">Telefone Fixo da Loja (Opcional)</Label>
+                <Label htmlFor="cpf">CPF</Label>
                 <PatternFormat
                   customInput={Input}
-                  format="(##) ####-####"
+                  format="###.###.###-##"
                   mask="_"
-                  placeholder="(11) 3333-3333"
-                  value={businessPhone}
-                  onValueChange={(values) => setBusinessPhone(values.value)}
+                  placeholder="000.000.000-00"
+                  value={cpf}
+                  onValueChange={(values) => setCpf(values.value)}
                   disabled={loading}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="address">Endereço (Opcional)</Label>
+                <Label htmlFor="cnh">CNH</Label>
                 <Input
-                  id="address"
-                  placeholder="Rua, Número, Bairro"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  id="cnh"
+                  placeholder="Número de Registro"
+                  value={cnh}
+                  onChange={(e) => setCnh(e.target.value)}
                   disabled={loading}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="vehiclePlate">Placa do Veículo (Se aplicável)</Label>
+                <Input
+                  id="vehiclePlate"
+                  placeholder="ABC-1234"
+                  value={vehiclePlate}
+                  onChange={(e) => setVehiclePlate(e.target.value)}
+                  disabled={loading}
+                  className="uppercase"
+                  maxLength={8}
                 />
               </div>
             </div>
 
             <Button type="submit" className="w-full" size="lg" disabled={loading}>
-              {loading ? 'Cadastrando...' : 'Criar minha conta'}
+              {loading ? 'Solicitando...' : 'Concluir Cadastro'}
             </Button>
           </form>
         </CardContent>

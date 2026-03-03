@@ -39,7 +39,10 @@ const statusColor: Record<string, "default" | "secondary" | "destructive" | "out
   ISSUE: 'destructive',
 };
 
+import { useAuth } from '../../../contexts/auth-context';
+
 export default function CourierDashboard() {
+  const { user } = useAuth();
   const [availableDeliveries, setAvailableDeliveries] = useState<Delivery[]>([]);
   const [activeDeliveries, setActiveDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState(true);
@@ -161,9 +164,20 @@ export default function CourierDashboard() {
 
   return (
     <DashboardLayout>
-
-      {loading ? (
-        <div>Carregando...</div>
+      {user?.status === 'PENDING' ? (
+        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+          <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold mb-2">Cadastro em Análise</h2>
+          <p className="text-gray-600 max-w-md mx-auto">
+            Recebemos os seus dados e estamos validando o seu cadastro. Você receberá um aviso assim que for aprovado para começar a aceitar entregas.
+          </p>
+        </div>
+      ) : loading ? (
+        <div className="flex justify-center py-12">Carregando...</div>
       ) : (
         <div className="space-y-8">
             {/* Active Deliveries Section */}

@@ -8,6 +8,10 @@ interface User {
   role: 'MERCHANT' | 'COURIER' | 'ADMIN';
   isRoot: boolean;
   phoneE164: string;
+  status?: 'PENDING' | 'APPROVED' | 'REJECTED';
+  cpf?: string;
+  cnh?: string;
+  vehiclePlate?: string;
   businesses?: {
     id: string;
     name: string;

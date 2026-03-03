@@ -12,6 +12,7 @@ export default function AdminDashboard() {
   const { 
     stats, 
     pendingBusinesses, 
+    pendingCouriers,
     issueDeliveries, 
     loading, 
     period, 
@@ -132,8 +133,46 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        {/* Issue Deliveries */}
+        {/* Pending Couriers */}
         <Card className="col-span-3">
+          <CardHeader>
+            <CardTitle>Entregadores Pendentes</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {pendingCouriers.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                Nenhum entregador pendente.
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {pendingCouriers.map((courier) => (
+                  <div key={courier.id} className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0">
+                    <div className="flex items-center gap-4">
+                      <div className="bg-blue-100 p-2 rounded-full">
+                        <Users className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium">{courier.name}</p>
+                        <p className="text-sm text-muted-foreground">{courier.phoneE164}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                       <span className="text-xs text-muted-foreground">
+                        {format(new Date(courier.createdAt), "dd 'de' MMM", { locale: ptBR })}
+                      </span>
+                      <Link to={`/admin/users?id=${courier.id}`}>
+                        <Button variant="outline" size="sm">Ver</Button>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Issue Deliveries */}
+        <Card className="col-span-7">
            <CardHeader>
             <CardTitle className="text-destructive flex items-center gap-2">
               <AlertOctagon className="h-5 w-5" />
@@ -146,9 +185,9 @@ export default function AdminDashboard() {
                 Nenhuma entrega com problemas reportados.
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {issueDeliveries.map((delivery) => (
-                   <div key={delivery.id} className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0">
+                   <div key={delivery.id} className="flex items-center justify-between border p-4 rounded-lg bg-slate-50">
                      <div>
                         <div className="flex items-center gap-2">
                           <p className="font-medium">#{delivery.id.slice(0, 8)}</p>
@@ -159,7 +198,7 @@ export default function AdminDashboard() {
                         </p>
                      </div>
                      <Link to={`/admin/deliveries?id=${delivery.id}`}>
-                        <Button size="sm" variant="ghost">Resolver</Button>
+                        <Button size="sm" variant="outline">Resolver</Button>
                      </Link>
                    </div>
                 ))}

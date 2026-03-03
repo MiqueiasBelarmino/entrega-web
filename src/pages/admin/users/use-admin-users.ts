@@ -12,6 +12,10 @@ export interface AdminUser {
   role: UserRole;
   isActive: boolean;
   isRoot: boolean;
+  status?: 'PENDING' | 'APPROVED' | 'REJECTED'; // Courier status
+  cpf?: string;
+  cnh?: string;
+  vehiclePlate?: string;
   createdAt: string;
 }
 
@@ -62,11 +66,25 @@ export function useAdminUsers() {
     }
   };
 
+  const updateCourierStatus = async (id: string, status: 'PENDING' | 'APPROVED' | 'REJECTED') => {
+    try {
+      await api.patch(`/admin/couriers/${id}/status`, { status });
+      toast.success(`Cadastro ${status === 'APPROVED' ? 'aprovado' : 'rejeitado'}`);
+      setUsers(prev => prev.map(u => 
+        u.id === id ? { ...u, status } : u
+      ));
+    } catch (error) {
+      console.error('Error updating courier status:', error);
+      toast.error('Erro ao atualizar status do entregador');
+    }
+  };
+
   return {
     users,
     loading,
     updateUserRole,
     toggleUserStatus,
+    updateCourierStatus,
     refresh: fetchUsers
   };
 }

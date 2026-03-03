@@ -30,7 +30,7 @@ import { getRoleLabel } from '@/lib/utils';
 import { CreateUserModal } from './create-user-modal';
 
 export default function AdminUsers() {
-  const { users, loading, updateUserRole, toggleUserStatus, refresh } = useAdminUsers();
+  const { users, loading, updateUserRole, toggleUserStatus, updateCourierStatus, refresh } = useAdminUsers();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getRoleBadge = (role: UserRole) => {
@@ -39,6 +39,24 @@ export default function AdminUsers() {
       case 'MERCHANT': return 'secondary';
       case 'COURIER': return 'outline';
       default: return 'outline';
+    }
+  };
+
+  const getStatusBadge = (status?: string) => {
+    switch (status) {
+      case 'APPROVED': return 'outline';
+      case 'PENDING': return 'secondary';
+      case 'REJECTED': return 'destructive';
+      default: return 'outline';
+    }
+  };
+
+  const getStatusLabel = (status?: string) => {
+    switch (status) {
+      case 'APPROVED': return 'Aprovado';
+      case 'PENDING': return 'Pendente';
+      case 'REJECTED': return 'Rejeitado';
+      default: return '-';
     }
   };
 
@@ -95,7 +113,16 @@ export default function AdminUsers() {
                       {user.name}
                       {user.isRoot && <span title="Super Admin"><Shield className="h-3 w-3 text-yellow-600" /></span>}
                     </div>
-                    {user.email && <div className="text-xs text-muted-foreground">{user.email}</div>}
+                    <div className="text-xs text-muted-foreground">
+                      {user.email || 'Sem email'}
+                      {user.role === 'COURIER' && (
+                        <div className="mt-1 flex gap-2 text-[10px] items-center">
+                          {user.cpf && <span className="bg-slate-100 px-1 rounded">CPF: {user.cpf}</span>}
+                          {user.cnh && <span className="bg-slate-100 px-1 rounded">CNH: {user.cnh}</span>}
+                          {user.vehiclePlate && <span className="bg-slate-100 px-1 rounded">Placa: {user.vehiclePlate}</span>}
+                        </div>
+                      )}
+                    </div>
                   </TableCell>
                   <TableCell>{user.phoneE164}</TableCell>
                   <TableCell>
@@ -104,9 +131,16 @@ export default function AdminUsers() {
                     </Badge>
                   </TableCell>
                   <TableCell>
-                     <Badge variant={user.isActive ? 'outline' : 'destructive'}>
-                      {user.isActive ? 'Ativo' : 'Inativo'}
-                    </Badge>
+                     <div className="flex flex-col gap-1">
+                      <Badge variant={user.isActive ? 'outline' : 'destructive'}>
+                        {user.isActive ? 'Ativo' : 'Inativo'}
+                      </Badge>
+                      {user.role === 'COURIER' && (
+                        <Badge variant={getStatusBadge(user.status) as any}>
+                          {getStatusLabel(user.status)}
+                        </Badge>
+                      )}
+                     </div>
                   </TableCell>
                   <TableCell>
                     {format(new Date(user.createdAt), "dd/MM/yyyy", { locale: ptBR })}
@@ -149,6 +183,22 @@ export default function AdminUsers() {
                           >
                              <UserCheck className="mr-2 h-4 w-4" /> Ativar
                           </DropdownMenuItem>
+                        )}
+
+                        {user.role === 'COURIER' && (
+                          <>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Aprovação</DropdownMenuLabel>
+                            <DropdownMenuItem onClick={() => updateCourierStatus(user.id, 'APPROVED')}>
+                              ✅ Aprovar Cadastro
+                            </DropdownMenuItem>
+                            <DropdownMenuItem 
+                              className="text-red-600 focus:text-red-600"
+                              onClick={() => updateCourierStatus(user.id, 'REJECTED')}
+                            >
+                              ❌ Rejeitar Cadastro
+                            </DropdownMenuItem>
+                          </>
                         )}
                       </DropdownMenuContent>
                     </DropdownMenu>

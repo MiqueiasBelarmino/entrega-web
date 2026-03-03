@@ -23,7 +23,7 @@ export default function LandingPage() {
               Entrar
             </Link>
             <Link
-              to="/login"
+              to="/signup-merchant"
               className="hidden sm:inline-flex items-center justify-center rounded-full bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all active:scale-95"
             >
               Começar Agora
@@ -54,7 +54,7 @@ export default function LandingPage() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
-                to="/login"
+                to="/signup-courier"
                 className="group flex items-center justify-center gap-2 rounded-full bg-orange-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all active:scale-95"
               >
                 Começar a Entregar Agora
@@ -225,7 +225,7 @@ export default function LandingPage() {
 
                 <div className="mt-16 sm:mt-24">
                     <Link
-                        to="/login"
+                        to="/signup-merchant"
                         className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all hover:scale-105 active:scale-95"
                     >
                         Criar Minha Conta Grátis
