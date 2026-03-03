@@ -1,4 +1,4 @@
-import { ArrowRight, Clock, MapPin, Smartphone, TrendingUp, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, Clock, MapPin, TrendingUp, ShieldCheck, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function LandingPage() {
@@ -8,7 +8,7 @@ export default function LandingPage() {
       <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="bg-orange-600 text-white p-1.5 rounded-lg">
+            <div className="bg-primary text-white p-1.5 rounded-lg">
               <Zap className="w-5 h-5" />
             </div>
             <span className="text-xl font-bold tracking-tight text-slate-800">
@@ -24,7 +24,7 @@ export default function LandingPage() {
             </Link>
             <Link
               to="/signup-merchant"
-              className="hidden sm:inline-flex items-center justify-center rounded-full bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all active:scale-95"
+              className="hidden sm:inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all active:scale-95"
             >
               Começar Agora
             </Link>
@@ -55,11 +55,14 @@ export default function LandingPage() {
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
                 to="/signup-courier"
-                className="group flex items-center justify-center gap-2 rounded-full bg-orange-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all active:scale-95"
+                className="group flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-white shadow-lg hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all active:scale-95"
               >
-                Começar a Entregar Agora
+                Começar Grátis
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
+              <p className="mt-3 text-sm text-slate-500 font-medium">
+                100% Grátis no primeiro mês • Sem cartão de crédito
+              </p>
             </div>
             
           </div>
@@ -110,84 +113,160 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-
-        {/* FEATURES SECTION */}
-        <section className="bg-white py-24 sm:py-32 overflow-hidden">
+        
+        {/* PRICING SECTION */}
+        <section className="bg-slate-50 py-24 sm:py-32" id="precos">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                  Tudo que você precisa em uma tela.
-                </h2>
-                <p className="mt-4 text-lg text-slate-600">
-                  O painel do lojista foi desenhado para a correria do balcão. Sem menus complicados, apenas agilidade e eficiência.
-                </p>
-                
-                <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-slate-600 lg:max-w-none">
-                  <div className="relative pl-9">
-                    <dt className="inline font-semibold text-slate-900">
-                      <Zap className="absolute left-1 top-1 h-5 w-5 text-orange-600" />
-                      Crie Entregas em 1 Clique.
-                    </dt>{' '}
-                    <dd className="inline">Digite o endereço, valor e chame o entregador instantaneamente.</dd>
-                  </div>
-                  
-                  <div className="relative pl-9">
-                    <dt className="inline font-semibold text-slate-900">
-                      <MapPin className="absolute left-1 top-1 h-5 w-5 text-orange-600" />
-                      Status Transparente.
-                    </dt>{' '}
-                    <dd className="inline">Acompanhe se está "Disponível", "A Caminho" ou "Entregue" visualmente.</dd>
-                  </div>
-                  
-                  <div className="relative pl-9">
-                    <dt className="inline font-semibold text-slate-900">
-                      <Smartphone className="absolute left-1 top-1 h-5 w-5 text-orange-600" />
-                      Tudo Pelo Celular.
-                    </dt>{' '}
-                    <dd className="inline">Nenhum app pesado para instalar. Acesse o sistema do seu navegador no balcão e gerencie as entregas com facilidade.</dd>
-                  </div>
-                </dl>
-              </div>
-              
-              {/* Feature Visual */}
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-100 to-orange-50 rounded-3xl transform rotate-3 scale-105 -z-10"></div>
-                <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-                  <div className="p-6 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
-                     <span className="font-semibold text-slate-800">Minhas Entregas (Hoje)</span>
-                     <span className="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full font-medium">12 Ativas</span>
-                  </div>
-                  <div className="p-6 space-y-4">
-                     {/* Mocked Deliveries */}
-                     <div className="p-4 border border-slate-100 rounded-xl bg-white shadow-sm flex items-center justify-between">
-                        <div>
-                            <p className="font-medium text-slate-900">#1024 - R. das Flores, 123</p>
-                            <p className="text-sm text-slate-500">João Silva • Motoboy a caminho</p>
-                        </div>
-                        <span className="flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
-                        </span>
-                     </div>
-                     <div className="p-4 border border-slate-100 rounded-xl bg-white shadow-sm flex items-center justify-between">
-                        <div>
-                            <p className="font-medium text-slate-900">#1025 - Av. Paulista, 1000</p>
-                            <p className="text-sm text-slate-500">Procurando entregador...</p>
-                        </div>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
-                     </div>
-                     <div className="p-4 border border-slate-100 rounded-xl bg-white shadow-sm flex items-center justify-between opacity-50">
-                        <div>
-                            <p className="font-medium text-slate-900 line-through decoration-slate-300">#1023 - R. Augusta, 500</p>
-                            <p className="text-sm text-slate-500">Entregue por Carlos</p>
-                        </div>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                     </div>
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-base font-semibold leading-7 text-orange-600">Planos simples e transparentes</h2>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                O preço justo para o tamanho do seu negócio.
+              </p>
+              <div className="mt-8 flex flex-col items-center">
+                <div className="relative group cursor-default animate-[pulse_3s_ease-in-out_infinite]">
+                  <style>{`
+                    @keyframes pulse {
+                      0%, 100% { transform: scale(1); }
+                      50% { transform: scale(1.02); }
+                    }
+                  `}</style>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-primary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                  <div className="relative px-6 py-4 bg-white ring-1 ring-slate-200 rounded-2xl leading-none flex flex-col items-center gap-3 shadow-xl">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary uppercase tracking-wider">
+                       🚀 Oferta de Lançamento
+                    </span>
+                    <p className="text-slate-800 font-semibold text-center text-base sm:text-lg">
+                      Mês 1 é <span className="text-orange-600 underline">por nossa conta</span>. <br className="hidden sm:block" />
+                      Mês 2 e 3 por apenas <span className="text-primary text-xl">R$ 9,90</span>.
+                    </p>
+                    <p className="text-slate-500 text-xs font-medium uppercase tracking-tight">
+                      Comece a profissionalizar suas entregas hoje!
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div className="mx-auto mt-10 grid w-full max-w-sm grid-cols-1 gap-6 px-4 sm:max-w-md lg:max-w-5xl lg:grid-cols-3 lg:px-8">
+              {/* Plano Essencial */}
+              <div className="flex flex-col rounded-3xl bg-white p-5 ring-1 ring-slate-200 xl:p-8 hover:shadow-lg transition-shadow">
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-x-4">
+                    <h3 className="text-lg font-semibold leading-8 text-slate-900">Essencial</h3>
+                    <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 uppercase tracking-wider">Towner/Pequenos</span>
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-slate-600">Ideal para quem está começando e precisa de entregadores de confiança.</p>
+                  <p className="mt-6 flex items-baseline gap-x-1">
+                    <span className="text-4xl font-bold tracking-tight text-slate-900">R$ 24,90</span>
+                    <span className="text-sm font-semibold leading-6 text-slate-600">/mês</span>
+                  </p>
+                  <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-slate-600">
+                    <li className="flex gap-x-3">
+                      <ShieldCheck className="h-6 w-5 flex-none text-orange-600" />
+                      Acesso à rede de entregadores
+                    </li>
+                    <li className="flex gap-x-3">
+                      <ShieldCheck className="h-6 w-5 flex-none text-orange-600" />
+                      Postagem manual de entregas
+                    </li>
+                    <li className="flex gap-x-3 text-slate-400">
+                      <ShieldCheck className="h-6 w-5 flex-none text-slate-300" />
+                      Suporte via bot ou e-mail (48h)
+                    </li>
+                  </ul>
+                </div>
+                <Link
+                  to="/signup-merchant"
+                  className="mt-8 block rounded-full px-3 py-2 text-center text-sm font-semibold leading-6 bg-slate-50 text-primary ring-1 ring-inset ring-primary/20 hover:ring-primary transition-all active:scale-95"
+                >
+                  Começar Mês Grátis
+                </Link>
+              </div>
+
+              {/* Plano Business */}
+              <div className="flex flex-col rounded-3xl bg-slate-900 p-5 ring-1 ring-slate-900 xl:p-8 shadow-2xl lg:scale-105 relative z-10">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-orange-600 px-4 py-1 text-xs font-bold text-white uppercase tracking-widest shadow-md">
+                   Mais Popular
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-x-4">
+                    <h3 className="text-lg font-semibold leading-8 text-white">Business</h3>
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-slate-300">Para restaurantes em crescimento que buscam agilidade total.</p>
+                  <p className="mt-6 flex flex-col items-baseline gap-x-1">
+                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">A partir de</span>
+                    <span className="text-4xl font-bold tracking-tight text-white">R$ 59,90*</span>
+                  </p>
+                  <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-slate-300">
+                    <li className="flex gap-x-3">
+                      <Zap className="h-6 w-5 flex-none text-orange-500" />
+                      Agilidade na rede de entregadores
+                    </li>
+                    <li className="flex gap-x-3">
+                      <Zap className="h-6 w-5 flex-none text-orange-500" />
+                      Suporte prioritário via WhatsApp
+                    </li>
+                    <li className="flex gap-x-3">
+                      <Zap className="h-6 w-5 flex-none text-orange-500" />
+                      Relatórios de fechamento mensal
+                    </li>
+                    <li className="flex gap-x-3">
+                      <Zap className="h-6 w-5 flex-none text-orange-500" />
+                      Múltiplos usuários (balcão + gerente)
+                    </li>
+                  </ul>
+                </div>
+                <Link
+                  to="/signup-merchant"
+                  className="mt-8 block rounded-full bg-primary px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary/90 transition-all active:scale-95"
+                >
+                  Turbinar Meu Delivery
+                </Link>
+              </div>
+
+              {/* Plano Enterprise */}
+              <div className="flex flex-col rounded-3xl bg-white p-5 ring-1 ring-slate-200 xl:p-8 hover:shadow-lg transition-shadow">
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-x-4">
+                    <h3 className="text-lg font-semibold leading-8 text-slate-900">Enterprise</h3>
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-slate-600">Gestão completa e ferramentas avançadas para grandes operações.</p>
+                  <p className="mt-6 flex items-baseline gap-x-1">
+                    <span className="text-4xl font-bold tracking-tight text-slate-900">R$ 149,90+</span>
+                    <span className="text-sm font-semibold leading-6 text-slate-600">ou variável</span>
+                  </p>
+                  <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-slate-600">
+                    <li className="flex gap-x-3">
+                      <TrendingUp className="h-6 w-5 flex-none text-orange-600" />
+                      Gerente de conta dedicado
+                    </li>
+                    <li className="flex gap-x-3">
+                      <TrendingUp className="h-6 w-5 flex-none text-orange-600" />
+                      Dashboards de performance
+                    </li>
+                    <li className="flex gap-x-3">
+                      <TrendingUp className="h-6 w-5 flex-none text-orange-600" />
+                      Prioridade na fila de notificações
+                    </li>
+                    <li className="flex gap-x-3 text-slate-400">
+                      <TrendingUp className="h-6 w-5 flex-none text-slate-300" />
+                      Integrações personalizadas
+                    </li>
+                  </ul>
+                </div>
+                <a
+                  href="https://wa.me/seu-numero"
+                  target="_blank"
+                  className="mt-8 block rounded-full px-3 py-2 text-center text-sm font-semibold leading-6 bg-white text-slate-900 ring-1 ring-inset ring-slate-200 hover:ring-orange-600 transition-all active:scale-95"
+                >
+                  Falar Consultor
+                </a>
+              </div>
+            </div>
+            
+            <p className="mt-10 text-center text-sm text-slate-500">
+              *Valores podem variar baseados no volume de entregas.
+            </p>
           </div>
         </section>
 
@@ -226,7 +305,7 @@ export default function LandingPage() {
                 <div className="mt-16 sm:mt-24">
                     <Link
                         to="/signup-merchant"
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all hover:scale-105 active:scale-95"
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all hover:scale-105 active:scale-95"
                     >
                         Criar Minha Conta Grátis
                         <ArrowRight className="w-5 h-5" />
@@ -250,7 +329,7 @@ export default function LandingPage() {
                 <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-slate-500">
                     <Link to="/login" className="hover:text-orange-600 transition-colors">Login Comerciante</Link>
                     <Link to="/login" className="hover:text-orange-600 transition-colors">Login Entregador</Link>
-                    <a href="#" className="hover:text-orange-600 transition-colors">Termos de Uso</a>
+                    <Link to="/terms" className="hover:text-orange-600 transition-colors">Termos de Uso</Link>
                     <Link to="/privacy" className="hover:text-orange-600 transition-colors">Privacidade</Link>
                 </nav>
                 

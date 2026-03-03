@@ -131,16 +131,19 @@ export default function AdminUsers() {
                     </Badge>
                   </TableCell>
                   <TableCell>
-                     <div className="flex flex-col gap-1">
-                      <Badge variant={user.isActive ? 'outline' : 'destructive'}>
-                        {user.isActive ? 'Ativo' : 'Inativo'}
-                      </Badge>
-                      {user.role === 'COURIER' && (
+                    <div className="flex flex-col gap-1">
+                      {user.role === 'COURIER' && user.status !== 'APPROVED' ? (
+                        /* Se for entregador e NÃO estiver aprovado, mostra apenas o status (Pendente/Rejeitado) */
                         <Badge variant={getStatusBadge(user.status) as any}>
                           {getStatusLabel(user.status)}
                         </Badge>
+                      ) : (
+                        /* Se for Admin/Lojista OU Entregador já aprovado, mostra se a conta está Ativa/Inativa */
+                        <Badge variant={user.isActive ? 'outline' : 'destructive'}>
+                          {user.isActive ? 'Ativo' : 'Inativo'}
+                        </Badge>
                       )}
-                     </div>
+                    </div>
                   </TableCell>
                   <TableCell>
                     {format(new Date(user.createdAt), "dd/MM/yyyy", { locale: ptBR })}

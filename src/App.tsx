@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 // Placeholders for now
 import LandingPage from './pages/landing';
 import PrivacyPolicyPage from './pages/landing/privacy';
+import TermsPage from './pages/landing/terms';
 import Login from './pages/auth/login';
 import Verify from './pages/auth/verify';
 import SignupMerchant from './pages/auth/signup-merchant';
@@ -80,6 +81,7 @@ function AppRoutes() {
 
       <Route path="/" element={isAuthenticated ? <Navigate to={user?.role === 'ADMIN' ? '/admin' : user?.role === 'MERCHANT' ? '/merchant' : '/courier'} /> : <LandingPage />} />
       <Route path="/privacy" element={<PrivacyPolicyPage />} />
+      <Route path="/terms" element={<TermsPage />} />
     </Routes>
   );
 }
