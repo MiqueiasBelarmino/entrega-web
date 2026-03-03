@@ -57,7 +57,7 @@ export default function LandingPage() {
                 to="/signup-courier"
                 className="group flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-white shadow-lg hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all active:scale-95"
               >
-                Começar Grátis Agora
+                Começar Grátis
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <p className="mt-3 text-sm text-slate-500 font-medium">
@@ -122,21 +122,35 @@ export default function LandingPage() {
               <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
                 O preço justo para o tamanho do seu negócio.
               </p>
-              <div className="mt-6 flex flex-col items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-                   🚀 Oferta Especial de Lançamento
-                </span>
-                <p className="text-slate-600 text-sm max-w-md">
-                  Mês 1 é por nossa conta. Mês 2 e 3 por apenas R$ 9,90. 
-                  Comece a profissionalizar suas entregas hoje!
-                </p>
+              <div className="mt-8 flex flex-col items-center">
+                <div className="relative group cursor-default animate-[pulse_3s_ease-in-out_infinite]">
+                  <style>{`
+                    @keyframes pulse {
+                      0%, 100% { transform: scale(1); }
+                      50% { transform: scale(1.02); }
+                    }
+                  `}</style>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-primary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                  <div className="relative px-6 py-4 bg-white ring-1 ring-slate-200 rounded-2xl leading-none flex flex-col items-center gap-3 shadow-xl">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary uppercase tracking-wider">
+                       🚀 Oferta de Lançamento
+                    </span>
+                    <p className="text-slate-800 font-semibold text-center text-base sm:text-lg">
+                      Mês 1 é <span className="text-orange-600 underline">por nossa conta</span>. <br className="hidden sm:block" />
+                      Mês 2 e 3 por apenas <span className="text-primary text-xl">R$ 9,90</span>.
+                    </p>
+                    <p className="text-slate-500 text-xs font-medium uppercase tracking-tight">
+                      Comece a profissionalizar suas entregas hoje!
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="mx-auto mt-16 grid max-w-md grid-cols-1 gap-8 lg:max-w-7xl lg:grid-cols-3">
+            <div className="mx-auto mt-10 grid w-full max-w-sm grid-cols-1 gap-6 px-4 sm:max-w-md lg:max-w-5xl lg:grid-cols-3 lg:px-8">
               {/* Plano Essencial */}
-              <div className="flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-slate-200 xl:p-10 hover:shadow-lg transition-shadow">
-                <div>
+              <div className="flex flex-col rounded-3xl bg-white p-5 ring-1 ring-slate-200 xl:p-8 hover:shadow-lg transition-shadow">
+                <div className="flex-1">
                   <div className="flex items-center justify-between gap-x-4">
                     <h3 className="text-lg font-semibold leading-8 text-slate-900">Essencial</h3>
                     <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 uppercase tracking-wider">Towner/Pequenos</span>
@@ -170,18 +184,18 @@ export default function LandingPage() {
               </div>
 
               {/* Plano Business */}
-              <div className="flex flex-col justify-between rounded-3xl bg-slate-900 p-8 ring-1 ring-slate-900 xl:p-10 shadow-2xl scale-105 relative z-10">
+              <div className="flex flex-col rounded-3xl bg-slate-900 p-5 ring-1 ring-slate-900 xl:p-8 shadow-2xl lg:scale-105 relative z-10">
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-orange-600 px-4 py-1 text-xs font-bold text-white uppercase tracking-widest shadow-md">
                    Mais Popular
                 </div>
-                <div>
+                <div className="flex-1">
                   <div className="flex items-center justify-between gap-x-4">
                     <h3 className="text-lg font-semibold leading-8 text-white">Business</h3>
                   </div>
                   <p className="mt-4 text-sm leading-6 text-slate-300">Para restaurantes em crescimento que buscam agilidade total.</p>
-                  <p className="mt-6 flex items-baseline gap-x-1">
-                    <span className="text-4xl font-bold tracking-tight text-white">R$ 59,90</span>
-                    <span className="text-sm font-semibold leading-6 text-slate-300">a R$ 89,90*</span>
+                  <p className="mt-6 flex flex-col items-baseline gap-x-1">
+                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">A partir de</span>
+                    <span className="text-4xl font-bold tracking-tight text-white">R$ 59,90*</span>
                   </p>
                   <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-slate-300">
                     <li className="flex gap-x-3">
@@ -211,8 +225,8 @@ export default function LandingPage() {
               </div>
 
               {/* Plano Enterprise */}
-              <div className="flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-slate-200 xl:p-10 hover:shadow-lg transition-shadow">
-                <div>
+              <div className="flex flex-col rounded-3xl bg-white p-5 ring-1 ring-slate-200 xl:p-8 hover:shadow-lg transition-shadow">
+                <div className="flex-1">
                   <div className="flex items-center justify-between gap-x-4">
                     <h3 className="text-lg font-semibold leading-8 text-slate-900">Enterprise</h3>
                   </div>
