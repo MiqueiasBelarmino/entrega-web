@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../../../lib/api';
 import toast from 'react-hot-toast';
 import { Button } from '../../../components/ui/button';
@@ -9,11 +9,13 @@ import { Label } from '../../../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
 import { PatternFormat } from 'react-number-format';
 import { ArrowLeft } from 'lucide-react';
+import { Checkbox } from '../../../components/ui/checkbox';
 
 export default function SignupMerchant() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -42,6 +44,12 @@ export default function SignupMerchant() {
     try {
       if (!name || !phone || !businessName || !categoryId) {
         toast.error('Preencha todos os campos obrigatórios.');
+        setLoading(false);
+        return;
+      }
+
+      if (!acceptedTerms) {
+        toast.error('Você precisa aceitar os Termos de Uso para continuar.');
         setLoading(false);
         return;
       }
@@ -179,7 +187,25 @@ export default function SignupMerchant() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full" size="lg" disabled={loading}>
+            <div className="flex items-start gap-3 pt-2">
+              <Checkbox
+                id="acceptedTerms"
+                checked={acceptedTerms}
+                onCheckedChange={(v) => setAcceptedTerms(!!v)}
+                disabled={loading}
+              />
+              <Label htmlFor="acceptedTerms" className="text-sm text-muted-foreground leading-snug cursor-pointer">
+                Li e aceito os{' '}
+                <Link to="/terms" target="_blank" className="text-orange-600 hover:underline font-medium">
+                  Termos de Uso
+                </Link>{' '}e a{' '}
+                <Link to="/privacy" target="_blank" className="text-orange-600 hover:underline font-medium">
+                  Política de Privacidade
+                </Link>{' '}da plataforma.
+              </Label>
+            </div>
+
+            <Button type="submit" className="w-full" size="lg" disabled={loading || !acceptedTerms}>
               {loading ? 'Cadastrando...' : 'Criar minha conta'}
             </Button>
           </form>

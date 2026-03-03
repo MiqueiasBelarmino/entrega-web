@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../../../lib/api';
 import toast from 'react-hot-toast';
 import { Button } from '../../../components/ui/button';
@@ -8,10 +8,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Label } from '../../../components/ui/label';
 import { PatternFormat } from 'react-number-format';
 import { ArrowLeft } from 'lucide-react';
+import { Checkbox } from '../../../components/ui/checkbox';
 
 export default function SignupCourier() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -30,6 +32,19 @@ export default function SignupCourier() {
         return;
       }
 
+      const cpfClean = cpf.replace(/\D/g, '');
+      if (cpfClean.length !== 11) {
+        toast.error('CPF inválido. Informe os 11 dígitos.');
+        setLoading(false);
+        return;
+      }
+
+      if (!acceptedTerms) {
+        toast.error('Você precisa aceitar os Termos de Uso para continuar.');
+        setLoading(false);
+        return;
+      }
+
       const phoneClean = phone.replace(/\D/g, ''); 
       if (phoneClean.length < 10) {
         toast.error('Telefone inválido');
@@ -40,7 +55,7 @@ export default function SignupCourier() {
       const payload = {
         name,
         phone: `+55${phoneClean}`,
-        cpf: cpf.replace(/\D/g, '') || undefined,
+        cpf: cpf.replace(/\D/g, ''),
         cnh: cnh.replace(/\D/g, '') || undefined,
         vehiclePlate: vehiclePlate || undefined,
       };
@@ -108,11 +123,10 @@ export default function SignupCourier() {
             <div className="space-y-4">
               <h3 className="text-sm font-medium text-muted-foreground border-b pb-2 flex justify-between items-center">
                 <span>Segurança e Identificação</span>
-                <span className="text-xs bg-slate-100 px-2 py-0.5 rounded-full text-slate-500 font-normal">Opcional por enquanto</span>
               </h3>
 
               <div className="space-y-2">
-                <Label htmlFor="cpf">CPF</Label>
+                <Label htmlFor="cpf">CPF *</Label>
                 <PatternFormat
                   customInput={Input}
                   format="###.###.###-##"
@@ -120,6 +134,7 @@ export default function SignupCourier() {
                   placeholder="000.000.000-00"
                   value={cpf}
                   onValueChange={(values) => setCpf(values.value)}
+                  required
                   disabled={loading}
                 />
               </div>
@@ -149,7 +164,25 @@ export default function SignupCourier() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full" size="lg" disabled={loading}>
+            <div className="flex items-start gap-3 pt-2">
+              <Checkbox
+                id="acceptedTerms"
+                checked={acceptedTerms}
+                onCheckedChange={(v) => setAcceptedTerms(!!v)}
+                disabled={loading}
+              />
+              <Label htmlFor="acceptedTerms" className="text-sm text-muted-foreground leading-snug cursor-pointer">
+                Li e aceito os{' '}
+                <Link to="/terms" target="_blank" className="text-orange-600 hover:underline font-medium">
+                  Termos de Uso
+                </Link>{' '}e a{' '}
+                <Link to="/privacy" target="_blank" className="text-orange-600 hover:underline font-medium">
+                  Política de Privacidade
+                </Link>{' '}da plataforma.
+              </Label>
+            </div>
+
+            <Button type="submit" className="w-full" size="lg" disabled={loading || !acceptedTerms}>
               {loading ? 'Solicitando...' : 'Concluir Cadastro'}
             </Button>
           </form>
